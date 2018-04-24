@@ -10,6 +10,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+var bundleConfig = require('../libs/bundle-config.json')
 
 const env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
@@ -30,6 +31,11 @@ const webpackConfig = merge(baseWebpackConfig, {
     chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
   },
   plugins: [
+    // 增加DLLReferencePlugin配置
+    new webpack.DllReferencePlugin({
+      context: __dirname,
+      manifest: require('../libs/libs-mainfest.json')//指向生成的manifest.json
+    }),
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
       'process.env': env
@@ -48,7 +54,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       filename: utils.assetsPath('css/[name].[contenthash].css'),
       // Setting the following option to `false` will not extract CSS from codesplit chunks.
       // Their CSS will instead be inserted dynamically with style-loader when the codesplit chunk has been loaded by webpack.
-      // It's currently set to `true` because we are seeing that sourcemaps are included in the codesplit bundle as well when it's `false`, 
+      // It's currently set to `true` because we are seeing that sourcemaps are included in the codesplit bundle as well when it's `false`,
       // increasing file size: https://github.com/vuejs-templates/webpack/issues/1110
       allChunks: true,
     }),
@@ -76,7 +82,10 @@ const webpackConfig = merge(baseWebpackConfig, {
         // https://github.com/kangax/html-minifier#options-quick-reference
       },
       // necessary to consistently work with multiple chunks via CommonsChunkPlugin
-      chunksSortMode: 'dependency'
+      chunksSortMode: 'dependency',
+      // 增加两个变量 在index.html里获取对应值
+      libJsName: bundleConfig.libs.js,
+      libCssName: bundleConfig.libs.css
     }),
     // keep module.id stable when vendor modules does not change
     new webpack.HashedModuleIdsPlugin(),
@@ -118,6 +127,12 @@ const webpackConfig = merge(baseWebpackConfig, {
         from: path.resolve(__dirname, '../static'),
         to: config.build.assetsSubDirectory,
         ignore: ['.*']
+      },
+      // 增加dllPlugin的libs文件copy
+      {
+        from: path.resolve(__dirname, '../libs'),
+        to: config.build.assetsSubDirectory,
+        ignore: ['*.json']
       }
     ])
   ]

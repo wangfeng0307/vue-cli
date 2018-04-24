@@ -10,12 +10,11 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
-
+    proxyTable: {},// FIXME：代理请求 '/mobile': {target: 路径 changeOrigin: true}
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
-    autoOpenBrowser: false,
+    autoOpenBrowser: false,// FIXME: true
     errorOverlay: true,
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
@@ -40,7 +39,7 @@ module.exports = {
     // https://vue-loader.vuejs.org/en/options.html#cachebusting
     cacheBusting: true,
 
-    cssSourceMap: true
+    cssSourceMap: true// FIXME: false
   },
 
   build: {
@@ -50,13 +49,14 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
+    // 与后路径相匹配
     assetsPublicPath: '/',
 
     /**
      * Source Maps
      */
 
-    productionSourceMap: true,
+    productionSourceMap: true,// FIXME: build关闭掉source map false
     // https://webpack.js.org/configuration/devtool/#production
     devtool: '#source-map',
 
