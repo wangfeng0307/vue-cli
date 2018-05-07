@@ -7,16 +7,16 @@ const path = require('path');
 module.exports = {
   root: true,
   extends: 'airbnb-base',
+  parser: 'babel-eslint',
   parserOptions: {
     // 想要使用的ECMAScript版本
-    "ecmaVersion": 6,
+    // "ecmaVersion": 6,
     // 如果代码是ECMAScript
     "sourceType": "module",
     // 想使用的额外语言特性
     "ecmaFeatures": {
       "jsx": true
     },
-    parser: 'babel-eslint'
   },
   env: {
     // 可配置多个环境 如 node, mocha等
@@ -36,13 +36,13 @@ module.exports = {
   ],
   'settings': {
     'import/resolver': {
-      webpack: {
-        config: path.resolve(__dirname, 'build/webpack.base.conf.js')
+      'webpack': {
+        'config': 'build/webpack.base.conf.js'
       }
     }
   },
   // add your custom rules here
-  rules: {
+  'rules': {
     // allow async-await
     /*'import/no-unresolved': 0,
     -        //缩进
@@ -93,11 +93,16 @@ module.exports = {
     'import/no-extraneous-dependencies': ['error', {
       'optionalDependencies': ['test/unit/index.js']
     }],
-    'generator-star-spacing': 'off',
-    'semi': ['error', 'never'],//无分号
-    'comma-dangle': 0,//无逗号
-    'linebreak-style': ['error', 'windows'],//换行风格
-    // allow debugger during development
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
+    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
+    'comma-dangle': 0,
+    'no-param-reassign': ['error', { 'props': false }],
+    'arrow-parens': ['error', 'as-needed'],
+    'func-names': ['error', 'as-needed'],
+    'semi': ['error', 'never'],
+    'no-console': 0,
+    'no-unused-expressions': 0,
+    'prefer-promise-reject-errors': 0,
+    'linebreak-style': ['error', 'windows'],
+    'object-curly-newline': 0
   }
 }

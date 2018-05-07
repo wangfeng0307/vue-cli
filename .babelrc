@@ -8,7 +8,7 @@
     }],
     "stage-0"
   ],
-  "plugins": ["transform-vue-jsx", "transform-runtime"],
+  "plugins": ["transform-vue-jsx", "syntax-dynamic-import", "transform-runtime"],
   "env": {
     "test": {
       "presets": ["env", "stage-0"],
